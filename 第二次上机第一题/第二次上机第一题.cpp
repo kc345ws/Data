@@ -27,6 +27,8 @@ void Menu()
 	cout << "9.插入节点" << endl;
 	cout << "10.查看叶子结点" << endl;
 	cout << "11.删除指定结点及其左右孩子" << endl;
+	cout << "12.查看指定结点的父节点" << endl;
+	cout << "13.查找指定结点是否存在" << endl;
 	cin >> select;
 	switch (select)
 	{
@@ -115,6 +117,37 @@ void Menu()
 		}
 		cout << "删除后先根遍历结果" << endl;
 		BT->Preorder(BT->ReturnRoot());
+		cout << endl;
+		Menu();
+		break;
+	case 12:
+		cout << "请输入要查找父节点结点的值" << endl;
+		char ch1;
+		cin >> ch1;
+		if (!BT->Parent(BT->ReturnRoot(), ch1))
+		{
+			cout << "该结点不存在父节点" << endl;
+		}
+		if (BT->Parent(BT->ReturnRoot(), ch1))
+		{
+			cout << "该结点的父节点" << endl;
+			cout << BT->Parent(BT->ReturnRoot(), ch1)->Data << endl;
+		}
+		cout << endl;
+		Menu();
+		break;
+	case 13:
+		cout << "请输入要查找结点的值" << endl;
+		char ch2;
+		cin >> ch2;
+		if (!BT->Find(BT->ReturnRoot(),ch2))
+		{
+			cout << "该结点不存在" << endl;
+		}
+		if (BT->Find(BT->ReturnRoot(), ch2))
+		{
+			cout << "该结点存在" << endl;
+		}
 		cout << endl;
 		Menu();
 		break;
@@ -335,6 +368,7 @@ BinaryTreeNode<T>* BinaryTree<T>::Parent(BinaryTreeNode<T>* root, const T &item)
 		{
 			return Tempnode;
 		}
+		
 		Queue.pop();//将队列中一个第一个元素弹出
 		if (Tempnode->Left)
 		{
