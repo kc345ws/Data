@@ -10,151 +10,170 @@ int main()
 {
 	Menu();
 }
+
 void Menu()
 {
 	int select;
 	int k;
 	int item;
 	int temp;
-	cout << "1.创建二叉树" << endl;
-	cout << "2.先根遍历" << endl;
-	cout << "3.中根遍历" << endl;
-	cout << "4.后根遍历" << endl;
-	cout << "5.层次遍历" << endl;
-	cout << "6.查看结点个数" << endl;
-	cout << "7.树的高度" << endl;
-	cout << "8.删除二叉树" << endl;
-	cout << "9.插入节点" << endl;
-	cout << "10.查看叶子结点" << endl;
-	cout << "11.删除指定结点及其左右孩子" << endl;
-	cout << "12.查看指定结点的父节点" << endl;
-	cout << "13.查找指定结点是否存在" << endl;
-	cin >> select;
-	switch (select)
+	while (1)
 	{
-	case 1:
-		cout << "按先根遍历顺序输入每个结点的值(#为空)" << endl;
-		//A B # C D # # # E F # # #
-		BT = new BinaryTree<char>();
-		BT->CreateBT(BT->ReturnRoot());
-		cout << endl;
-		cout << "创建完毕" << endl;
-		Menu();
-		break;
-	case 2:
-		cout << "先根遍历:" << endl;
-		BT->Preorder(BT->ReturnRoot());
-		cout << endl;
-		Menu();
-		break;
-	case 3:
-		cout << "中根遍历" << endl;
-		BT->Inorder(BT->ReturnRoot());
-		cout << endl;
-		Menu();
-		break;
-	case 4:
-		cout << "后根遍历" << endl;
-		BT->Postorder(BT->ReturnRoot());
-		cout << endl;
-		Menu();
-		break;
-	case 5:
-		cout << "层次遍历" << endl;
-		BT->Levelorder(BT->ReturnRoot());
-		cout << endl;
-		Menu();
-		break;
-	case 6:
-		cout << "结点个数" << endl;
-		cout << BT->GetNodeNumber() << endl;;
-		Menu();
-		break;
-	case 7:
-		cout << "树的高度" << endl;
-		cout << BT->GetHeight(BT->ReturnRoot())-1 << endl;;
-		Menu();
-		break;
-	case 8:
-		BT->DeleteBT(BT->ReturnRoot());
-		cout << "删除完毕" << endl;
-		Menu();
-		break;
-	case 9:
-		cout << "请输入插入结点的值" << endl;
-		char insertitem;
-		cin >> insertitem;
-		cout << "输入被插入结点的值" << endl;
-		char inserteditem;
-		cin >> inserteditem;
-		if (!BT->InsertLL(insertitem,inserteditem))
+		cout << "1.创建二叉树" << endl;
+		cout << "2.先根遍历" << endl;
+		cout << "3.中根遍历" << endl;
+		cout << "4.后根遍历" << endl;
+		cout << "5.层次遍历" << endl;
+		cout << "6.查看结点个数" << endl;
+		cout << "7.树的高度" << endl;
+		cout << "8.删除二叉树" << endl;
+		cout << "9.插入节点" << endl;
+		cout << "10.查看叶子结点" << endl;
+		cout << "11.删除指定结点及其左右孩子" << endl;
+		cout << "12.查看指定结点的父节点" << endl;
+		cout << "13.查找指定结点是否存在" << endl;
+		
+		
+		cin >> select;//必须清除缓存区
+		
+		if (!std::cin || select == '#')
 		{
-			cout << "没有该结点" << endl;
+			cin.clear();
+			cin.get();
+			cin >> select;
 		}
-		cout << "插入后先根遍历" << endl;
-		BT->Preorder(BT->ReturnRoot());
-		cout << endl;
-		Menu();
-		break;
-		/*case 9:
-			delete(sllisttest);
+
+		
+
+
+		switch (select)
+		{
+		case 1:
+			cout << "按先根遍历顺序输入每个结点的值(#为空)" << endl;
+			//A B # C D # # # E F # # #
+			BT = new BinaryTree<char>();
+			BT->CreateBT(BT->ReturnRoot());
+			cout << endl;
+			cout << "创建完毕" << endl;
+			Menu();
+			break;
+		case 2:
+			cout << "先根遍历:" << endl;
+			BT->Preorder(BT->ReturnRoot());
+			cout << endl;
+			Menu();
+			break;
+		case 3:
+			cout << "中根遍历" << endl;
+			BT->Inorder(BT->ReturnRoot());
+			cout << endl;
+			Menu();
+			break;
+		case 4:
+			cout << "后根遍历" << endl;
+			BT->Postorder(BT->ReturnRoot());
+			cout << endl;
+			Menu();
+			break;
+		case 5:
+			cout << "层次遍历" << endl;
+			BT->Levelorder(BT->ReturnRoot());
+			cout << endl;
+			Menu();
+			break;
+		case 6:
+			cout << "结点个数" << endl;
+			cout << BT->GetNodeNumber() << endl;;
+			Menu();
+			break;
+		case 7:
+			cout << "树的高度" << endl;
+			cout << BT->GetHeight(BT->ReturnRoot()) - 1 << endl;;
+			Menu();
+			break;
+		case 8:
+			BT->DeleteBT(BT->ReturnRoot());
 			cout << "删除完毕" << endl;
 			Menu();
-			break;*/
-	case 10:
-		cout << "叶子节点" << endl;
-		BT->GetLeaves(BT->ReturnRoot());
-		cout << endl;
-		Menu();
-		break;
-	case 11:
-		cout << "请输入要删除结点的值" << endl;
-		char del;
-		cin >> del;
-		if (!BT->DST(BT->ReturnRoot(), del))
-		{
-			cout << "没有该结点" << endl;
+			break;
+		case 9:
+			cout << "请输入插入结点的值" << endl;
+			char insertitem;
+			cin >> insertitem;
+			cout << "输入被插入结点的值" << endl;
+			char inserteditem;
+			cin >> inserteditem;
+			if (!BT->InsertLL(insertitem, inserteditem))
+			{
+				cout << "没有该结点" << endl;
+			}
+			cout << "插入后先根遍历" << endl;
+			BT->Preorder(BT->ReturnRoot());
+			cout << endl;
+			Menu();
+			break;
+			/*case 9:
+				delete(sllisttest);
+				cout << "删除完毕" << endl;
+				Menu();
+				break;*/
+		case 10:
+			cout << "叶子节点" << endl;
+			BT->GetLeaves(BT->ReturnRoot());
+			cout << endl;
+			Menu();
+			break;
+		case 11:
+			cout << "请输入要删除结点的值" << endl;
+			char del;
+			cin >> del;
+			if (!BT->DST(BT->ReturnRoot(), del))
+			{
+				cout << "没有该结点" << endl;
+			}
+			cout << "删除后先根遍历结果" << endl;
+			BT->Preorder(BT->ReturnRoot());
+			cout << endl;
+			Menu();
+			break;
+		case 12:
+			cout << "请输入要查找父节点结点的值" << endl;
+			char ch1;
+			cin >> ch1;
+			if (!BT->Parent(BT->ReturnRoot(), ch1))
+			{
+				cout << "该结点不存在父节点" << endl;
+			}
+			if (BT->Parent(BT->ReturnRoot(), ch1))
+			{
+				cout << "该结点的父节点" << endl;
+				cout << BT->Parent(BT->ReturnRoot(), ch1)->Data << endl;
+			}
+			cout << endl;
+			Menu();
+			break;
+		case 13:
+			cout << "请输入要查找结点的值" << endl;
+			char ch2;
+			cin >> ch2;
+			if (!BT->Find(BT->ReturnRoot(), ch2))
+			{
+				cout << "该结点不存在" << endl;
+			}
+			if (BT->Find(BT->ReturnRoot(), ch2))
+			{
+				cout << "该结点存在" << endl;
+			}
+			cout << endl;
+			Menu();
+			break;
+		default:
+			break;
 		}
-		cout << "删除后先根遍历结果" << endl;
-		BT->Preorder(BT->ReturnRoot());
-		cout << endl;
-		Menu();
-		break;
-	case 12:
-		cout << "请输入要查找父节点结点的值" << endl;
-		char ch1;
-		cin >> ch1;
-		if (!BT->Parent(BT->ReturnRoot(), ch1))
-		{
-			cout << "该结点不存在父节点" << endl;
-		}
-		if (BT->Parent(BT->ReturnRoot(), ch1))
-		{
-			cout << "该结点的父节点" << endl;
-			cout << BT->Parent(BT->ReturnRoot(), ch1)->Data << endl;
-		}
-		cout << endl;
-		Menu();
-		break;
-	case 13:
-		cout << "请输入要查找结点的值" << endl;
-		char ch2;
-		cin >> ch2;
-		if (!BT->Find(BT->ReturnRoot(),ch2))
-		{
-			cout << "该结点不存在" << endl;
-		}
-		if (BT->Find(BT->ReturnRoot(), ch2))
-		{
-			cout << "该结点存在" << endl;
-		}
-		cout << endl;
-		Menu();
-		break;
-	default:
-		break;
+		
 	}
 }
+
 
 /*void Menu()
 {
@@ -380,6 +399,7 @@ BinaryTreeNode<T>* BinaryTree<T>::Parent(BinaryTreeNode<T>* root, const T &item)
 			//如果右子结点为空则将右子结点入队
 		}
 	}
+	return nullptr;
 }
 
 template<typename T>//插入节点 被插入结点

@@ -22,11 +22,11 @@ public:
 	Tree(T&item);
 	TreeNode<T> *CreateTree(TreeNode<T> *root);
 	TreeNode<T> *ReturnRoot()const { return Root; }//返回根节点
-	void Preorder(TreeNode<T> *root)const;//先根遍历递归算法
-	void Postorder(TreeNode<T> *root)const;//后根遍历递归算法
+	void Preorder(TreeNode<T> *root);//先根遍历递归算法
+	void Postorder(TreeNode<T> *root);//后根遍历递归算法
 	void Levelorder(TreeNode<T> *root)const;//层次遍历
 	TreeNode<T>* GFC(TreeNode<T> *root);//查找大儿子兄弟
-	TreeNode<T>* GNC(TreeNode<T>*root);//查找兄弟结点
+	TreeNode<T>* GNB(TreeNode<T>*root);//查找兄弟结点
 	void NPO(TreeNode<T> *root);//先根遍历迭代算法
 	void NPT(TreeNode<T> *root);//后根遍历迭代算法
 };
@@ -36,32 +36,37 @@ class Forest//森林
 {
 private:
 	
-	
-
-	
 public:
+	TreeNode<T>*VirtualRoot;
 	int ForestSize;
 	TreeNode<T>*Root[];
+	
+
 	Forest();
 	Forest(T&item);
 	void CreateForest();
 	TreeNode<T> *CreateForestTree(TreeNode<T> *root);
 	TreeNode<T> *ReturnRoot()const { return Root; }//返回根节点
-	void ForestPreorder(TreeNode<T> *root)const;//先根遍历递归算法
+	void ForestPreorder(TreeNode<T> *root);//先根遍历递归算法
 	void Pre(TreeNode<T>*root[]);
-	void ForestPostorder(TreeNode<T> *root)const;//后根遍历递归算法
+	void ForestPostorder(TreeNode<T> *root);//后根遍历递归算法
 	void Pos(TreeNode<T>*root[]);
-	void ForestLevelorder(TreeNode<T> *root)const;//层次遍历
+	void ForestLevelorder(TreeNode<T> *root);//层次遍历
 	//TreeNode<T>* GFC(TreeNode<T> *root);//查找大儿子兄弟
 	//TreeNode<T>* GNC(TreeNode<T>*root);//查找兄弟结点
 	void ForestNPO(TreeNode<T> *root);//先根遍历迭代算法
 	void ForestNPT(TreeNode<T> *root);//后根遍历迭代算法
-	void Levelorder(TreeNode<T> *root)const;//层次遍历
+	void Levelorder(TreeNode<T> *root[]);//层次遍历
 	void Level(TreeNode<T>*root[]);
 	//TreeNode<T> *ReturnRoot()const { return Root; }//返回根节点
-
 	void NPO(TreeNode<T> *root);//先根遍历迭代算法
 	void NPT(TreeNode<T> *root);//后根遍历迭代算法
+
+	void NPOF(TreeNode<T> *root[]);//先根遍历迭代算法
+	void NPTF(TreeNode<T> *root[]);//后根遍历迭代算法
+
+	TreeNode<T>* GFC(TreeNode<T> *root);//查找大儿子兄弟
+	TreeNode<T>* GNB(TreeNode<T>*root);//查找兄弟结点
 };
 #endif // !_HEAD
 
