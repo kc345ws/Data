@@ -3,7 +3,7 @@
 #include<queue>
 #include<deque>
 #include<list>
-#define FILE_BUFFER_LENGTH 30000
+#define FILE_BUFFER_LENGTH 3000000
 using namespace std;
 Tree<char>* tree;
 Forest<char>* forest;
@@ -115,6 +115,9 @@ void Menu()
 			Menu();
 			break;
 
+
+
+
 		case 10:
 			forest->Pos(forest->Root);
 
@@ -124,6 +127,7 @@ void Menu()
 
 		case 11:
 			forest->Pre(forest->Root);
+			//forest->NPOF(forest->Root);
 			cout << endl;
 			Menu();
 			break;
@@ -342,6 +346,7 @@ inline Forest<T>::Forest()
 	int size;
 	cin >> size;
 	ForestSize = size;
+	//Root = new TreeNode<T>[size];
 	for (int i = 0; i < ForestSize; i++)
 	{
 		Root[i] = new TreeNode<T>();

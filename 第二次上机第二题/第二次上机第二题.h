@@ -40,6 +40,7 @@ public:
 	TreeNode<T>*VirtualRoot;
 	int ForestSize;
 	TreeNode<T>*Root[];
+	//TreeNode<T>*Root;
 	
 
 	Forest();

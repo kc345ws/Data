@@ -127,6 +127,7 @@ inline SortingAlgorithm::SortingAlgorithm()
 		Data[i] = rand()%100;
 	}
 
+	cout << "以下为随即生成的数据" << endl;
 	for (int i = 0; i < SortNumber; i++)
 	{
 		cout << Data[i] << " ";
