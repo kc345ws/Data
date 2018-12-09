@@ -67,5 +67,6 @@ public:
 	//int* ReturnVisited(){ return Visited; }
 	void DepthFirstSearch(const int v,int *visited);//深度优先遍历 基本思想类似于树的先根遍历
 	void DFS_Main();
+	void BreadthFirstSearch(int v);//广度优先遍历 类似树的层次遍历
 };
 #endif

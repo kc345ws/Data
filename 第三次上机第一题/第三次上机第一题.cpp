@@ -1,5 +1,6 @@
 #include"第三次上机第一题.h"
 #include<iostream>
+#include<queue>
 using namespace std;
 Graph_List<char>*GraphList;
 void Menu();
@@ -17,7 +18,7 @@ void Menu()
 	int temp;
 	cout << "1.创建图" << endl;
 	cout << "2.图的深度优先遍历" << endl;
-
+	cout << "3.图的广度优先遍历" << endl;
 	while (1)
 	{
 
@@ -52,7 +53,11 @@ void Menu()
 			Menu();
 			break;
 		case 3:
-			
+			cout << "请输入开始遍历结点的序号" << endl;
+			int startadj;
+			cin >> startadj;
+			GraphList->BreadthFirstSearch(startadj);
+			cout << ":图的深度优先遍历结果" << endl;
 
 			cout << endl;
 			Menu();
@@ -149,6 +154,18 @@ Graph_List<T>::Graph_List()
 			cout << "请输入第" << i << "个顶点" << "第" << temp << "个边结点的序号(-1结束)" << endl;
 			int Adj;
 			cin >> Adj;
+			while (1)
+			{
+				if (Adj >= GraphSize||Adj<-1)
+				{
+					cout << "你输入的序号超出范围请重新输入" << endl;
+					cin >> Adj;
+				}
+				else
+				{
+					break;
+				}
+			}
 			if (Adj == -1)
 			{
 				break;
@@ -316,7 +333,53 @@ void Graph_List<T>::DFS_Main()
 		cout << "请输入要开始遍历结点的序号" << endl;
 		int temp;
 		cin >> temp;
+		while (1)
+		{
+			if (temp >= GraphSize || temp<=-1)
+			{
+				cout << "你输入的序号超出范围请重新输入" << endl;
+				cin >> temp;
+			}
+			else
+			{
+				break;
+			}
+		}
 		DepthFirstSearch(temp, Visited);
+	}
+}
+
+
+template<typename T>
+void Graph_List<T>::BreadthFirstSearch(int v)
+{
+	queue<Vertex<T>>Queue;
+	int *visited = new int[GraphSize];
+	for (int i = 0; i < GraphSize; i++)
+	{
+		visited[i] = 0;
+	}
+	cout << vertices[v].verinfor << " ";
+	visited[v] = 1;
+	Queue.push(vertices[v]);
+
+	while (!Queue.empty())
+	{
+		Vertex<T>TempVertex = Queue.front();
+		Queue.pop();
+		Edge<T> *TempEdge = TempVertex.adjacent;
+		while (TempEdge)
+		{
+			if (visited[TempEdge->verAdj] == 0)
+			{
+				//cout << TempVertex.verinfor << " ";
+				cout << vertices[TempEdge->verAdj].verinfor << " ";
+				visited[TempEdge->verAdj] = 1;
+				Queue.push(vertices[TempEdge->verAdj]);
+			}
+			TempEdge = TempEdge->next;
+		}
+		
 	}
 }
 
