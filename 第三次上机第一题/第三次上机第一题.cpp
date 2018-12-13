@@ -13,11 +13,12 @@ int main()
 void Menu()
 {
 	int select;
-	int k;
-	int item;
-	int temp;
+	//int k;
+	//int item;
+	//int temp;
 	int firstadj;
 	int secondadj;
+	int FirstNeighbor;
 	cout << "1.创建图" << endl;
 	cout << "2.图的深度优先遍历" << endl;
 	cout << "3.图的广度优先遍历" << endl;
@@ -25,6 +26,7 @@ void Menu()
 	cout << "5.插入顶点" << endl;
 	cout << "6.插入一条边" << endl;
 	cout << "7.删除一条边" << endl;
+	cout << "8.查找顶点的第一个边结点" << endl;
 	while (1)
 	{
 
@@ -157,7 +159,25 @@ void Menu()
 			break;
 
 		case 8:
-			
+			cout << "请输入要查找顶点的序号" << endl;
+			cin >> firstadj;
+			while (firstadj < 0 || firstadj >= GraphList->ReturnGraphSize())
+			{
+				cout << "你输入的数据超出范围请重新输入" << endl;
+				cin >> firstadj;
+			}
+
+			FirstNeighbor = GraphList->GetFirstNeighbor(firstadj);
+			if (FirstNeighbor == -1)
+			{
+				cout << "该顶点没有边结点" << endl;
+			}
+			else
+			{
+				//Vertex<char>*Temp = GraphList->ReturnVertex();
+				cout << "该顶点的第一个边结点为" << endl;
+				cout << GraphList->ReturnVertex()[FirstNeighbor].verinfor << endl;			
+			}
 			
 			cout << endl;
 			Menu();

@@ -74,5 +74,6 @@ public:
 	bool DeleteEdge(const int v1, const int v2);//删除一条边
 	int GetCost(const int v1 , const int v2);//返回指定边的权值
 	int ReturnGraphSize() { return GraphSize; };
+	Vertex<T>* ReturnVertex() { return vertices; }
 };
 #endif
