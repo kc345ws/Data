@@ -19,6 +19,8 @@ void Menu()
 	cout << "1.创建图" << endl;
 	cout << "2.图的深度优先遍历" << endl;
 	cout << "3.图的广度优先遍历" << endl;
+	cout << "4.返回指定边的权值" << endl;
+	cout << "5.插入顶点" << endl;
 	while (1)
 	{
 
@@ -57,21 +59,43 @@ void Menu()
 			int startadj;
 			cin >> startadj;
 			GraphList->BreadthFirstSearch(startadj);
-			cout << ":图的深度优先遍历结果" << endl;
+			cout << ":图的广度度优先遍历结果" << endl;
 
 			cout << endl;
 			Menu();
 			break;
 		case 4:
-			
-
+			cout << "请输入第一个结点的序号" << endl;
+			int firstadj;
+			cin >> firstadj;
+			while (firstadj < 0 || firstadj >= GraphList->ReturnGraphSize())
+			{
+				cout << "你输入的数据超出范围请重新输入" << endl;
+				cin >> firstadj;
+			}
+			cout << "请输入第二个结点的序号" << endl;
+			int secondadj;
+			cin >> secondadj;
+			while (secondadj < 0 || secondadj >= GraphList->ReturnGraphSize())
+			{
+				cout << "你输入的数据超出范围请重新输入" << endl;
+				cin >> secondadj;
+			}
+			cout << "该边的权值" << endl;
+			cout << GraphList->GetCost(firstadj, secondadj);
 			cout << endl;
 			Menu();
 			break;
 
 		case 5:
-			
-
+			cout << "请输入要插入结点的序号" << endl;
+			int insertedadj;
+			cin >> insertedadj;
+			cout << "请输入插入结点的权值" << endl;
+			int insertcost;
+			cin >> insertcost;
+			GraphList->Insert(insertedadj, insertcost);
+			cout << "插入成功" << endl;
 			cout << endl;
 			Menu();
 			break;
@@ -134,7 +158,7 @@ Graph_List<T>::Graph_List()
 {
 	cout << "请输入你要创建的顶点个数" << endl;
 	cin >> GraphSize;
-	vertices = new Vertex<T>[GraphSize];
+	vertices = new Vertex<T>[20];
 
 	for (int i = 0; i < GraphSize; i++)
 	{
@@ -170,16 +194,15 @@ Graph_List<T>::Graph_List()
 			{
 				break;
 			}
-			/*cout << "请输入第" << i + 1 << "个顶点" << "第" << temp + 1 << "个边结点的权值" << endl;
+			cout << "请输入第" << i << "个顶点" << "到第" << Adj << "个顶点边的权值" << endl;
 			int weight;
-			cin >> weight;*/
+			cin >> weight;
 			if (!vertices[i].adjacent)//如果是第一个边结点则将它赋值给adjacent
 			{
 				vertices[i].adjacent = new Edge<T>();
 				vertices[i].adjacent->verAdj = Adj;
-				//vertices[i].adjacent->cost = weight;
+				vertices[i].adjacent->cost = weight;
 				Temp = vertices[i].adjacent;
-
 
 				//无向图部分
 				Edge<T>*other = vertices[Adj].adjacent;
@@ -190,6 +213,8 @@ Graph_List<T>::Graph_List()
 						vertices[Adj].adjacent = new Edge<T>();
 						vertices[Adj].adjacent->verAdj = i;
 						//vertices[Adj].adjacent->next = nullptr;
+						
+						vertices[Adj].adjacent->cost = weight;
 						break;
 					}
 					else
@@ -221,7 +246,7 @@ Graph_List<T>::Graph_List()
 				Temp->next = new Edge<T>();
 				Temp = Temp->next;
 				Temp->verAdj = Adj;
-				//Temp->cost = weight;
+				Temp->cost = weight;
 
 
 				//无向图部分
@@ -233,6 +258,8 @@ Graph_List<T>::Graph_List()
 						vertices[Adj].adjacent = new Edge<T>();
 						vertices[Adj].adjacent->verAdj = i;
 						//vertices[Adj].adjacent->next = nullptr;
+
+						vertices[Adj].adjacent->cost = weight;
 						break;
 					}
 					else
@@ -241,6 +268,8 @@ Graph_List<T>::Graph_List()
 						{
 							other->next = new Edge<T>();
 							other->verAdj = i;
+
+							other->cost = weight;
 							break;
 						}
 						other = other->next;
@@ -379,8 +408,67 @@ void Graph_List<T>::BreadthFirstSearch(int v)
 			}
 			TempEdge = TempEdge->next;
 		}
-		
 	}
+}
+
+template<typename T>//要插入结点的序号 插入结点的权值
+void Graph_List<T>::Insert(const int v1, const int v2)
+{
+	Edge<T> *TempEdge = vertices[v1].adjacent;//获取要插入结点邻接表的头结点
+	GraphSize++;//结点数量加一
+
+	cout << "请输入第" << GraphSize -1 << "个顶点的名称" << endl;
+	cin >> vertices[GraphSize - 1].verinfor;
+	vertices[GraphSize - 1].adjacent = nullptr;//新插入结点的邻接表头结点赋值为空
+
+	if (!TempEdge)//如果要插入结点的邻接表头结点为空
+	{
+		TempEdge = new Edge<T>();
+		TempEdge->verAdj = GraphSize - 1;//要插入结点的邻接表头结点序号赋值为新插入结点在顶点表中的序号
+		TempEdge->cost = v2;
+		Edge<T>* newadjacent;
+		newadjacent = vertices[GraphSize - 1].adjacent;
+		newadjacent = new Edge<T>();
+		newadjacent->verAdj = v1;//新插入结点邻接表的头结点序号赋值为要插入结点的序号
+		newadjacent->cost = v2;
+	}
+	else//如果要插入结点的邻接表头结点不为空
+	{
+		while (TempEdge)//找到邻接表中下一个为空的边结点
+		{
+			if (!TempEdge->next)
+			{
+				TempEdge->next = new Edge<T>();
+				TempEdge->next->cost = v2;
+				TempEdge->next->verAdj = GraphSize - 1;
+
+
+				Edge<T>* newadjacent;
+				vertices[GraphSize - 1].adjacent = new Edge<T>();
+				newadjacent = vertices[GraphSize - 1].adjacent;
+				newadjacent->verAdj = v1;
+				newadjacent->cost = v2;
+				newadjacent->next = nullptr;
+				break;
+			}
+			TempEdge = TempEdge->next;
+		}
+	}
+}
+
+template<typename T>
+int Graph_List<T>::GetCost(const int v1, const int v2)
+{
+	Edge<T> *TempEdge = vertices[v1].adjacent;
+	while (TempEdge)
+	{
+		if (v2 == TempEdge->verAdj)
+		{
+			return TempEdge->cost;
+		}
+		TempEdge = TempEdge->next;
+	}
+	return 0;
 }
 
 

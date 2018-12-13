@@ -68,5 +68,8 @@ public:
 	void DepthFirstSearch(const int v,int *visited);//深度优先遍历 基本思想类似于树的先根遍历
 	void DFS_Main();
 	void BreadthFirstSearch(int v);//广度优先遍历 类似树的层次遍历
+	void Insert(const int v1 , const int v2);//插入一个结点
+	int GetCost(const int v1 , const int v2);//返回指定边的权值
+	int ReturnGraphSize() { return GraphSize; };
 };
 #endif

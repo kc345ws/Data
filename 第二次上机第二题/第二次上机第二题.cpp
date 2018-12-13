@@ -453,7 +453,7 @@ void Forest<T>::ForestPostorder(TreeNode<T>* root)
 
 template<typename T>
 void Forest<T>::Pos(TreeNode<T>* root[])
-{
+{   
 	for (int i = 0; i < ForestSize; i++)
 	{
 		cout << "第" << i + 1 << "棵树的后根遍历结果" << endl;
@@ -465,11 +465,13 @@ void Forest<T>::Pos(TreeNode<T>* root[])
 template<typename T>
 void Forest<T>::ForestLevelorder(TreeNode<T>* root)
 {
+
 }
 
-template<typename T>
+template<typename T>         
 void Forest<T>::ForestNPO(TreeNode<T>* root)
 {
+
 }
 
 template<typename T>
