@@ -69,6 +69,9 @@ public:
 	void DFS_Main();
 	void BreadthFirstSearch(int v);//广度优先遍历 类似树的层次遍历
 	void Insert(const int v1 , const int v2);//插入一个结点
+	void InsertEdge(const int v1 , const int v2);//插入一条边
+	void Delete(const int adj);//删除一个顶点
+	void DeleteEdge(const int v1, const int v2);//删除一条边
 	int GetCost(const int v1 , const int v2);//返回指定边的权值
 	int ReturnGraphSize() { return GraphSize; };
 };

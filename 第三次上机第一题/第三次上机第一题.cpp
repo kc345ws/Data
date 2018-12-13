@@ -16,11 +16,14 @@ void Menu()
 	int k;
 	int item;
 	int temp;
+	int firstadj;
+	int secondadj;
 	cout << "1.创建图" << endl;
 	cout << "2.图的深度优先遍历" << endl;
 	cout << "3.图的广度优先遍历" << endl;
 	cout << "4.返回指定边的权值" << endl;
 	cout << "5.插入顶点" << endl;
+	cout << "6.插入一条边" << endl;
 	while (1)
 	{
 
@@ -66,7 +69,7 @@ void Menu()
 			break;
 		case 4:
 			cout << "请输入第一个结点的序号" << endl;
-			int firstadj;
+			
 			cin >> firstadj;
 			while (firstadj < 0 || firstadj >= GraphList->ReturnGraphSize())
 			{
@@ -74,7 +77,7 @@ void Menu()
 				cin >> firstadj;
 			}
 			cout << "请输入第二个结点的序号" << endl;
-			int secondadj;
+			
 			cin >> secondadj;
 			while (secondadj < 0 || secondadj >= GraphList->ReturnGraphSize())
 			{
@@ -101,8 +104,24 @@ void Menu()
 			break;
 
 		case 6:
-			
+			cout << "请输入第一个顶点的序号" << endl;
+			cin >> firstadj;
+			while (firstadj < 0 || firstadj >= GraphList->ReturnGraphSize())
+			{
+				cout << "你输入的数据超出范围请重新输入" << endl;
+				cin >> firstadj;
+			}
 
+			cout << "请输入第二个顶点的序号" << endl;
+			cin >> secondadj;
+			while (secondadj < 0 || secondadj >= GraphList->ReturnGraphSize())
+			{
+				cout << "你输入的数据超出范围请重新输入" << endl;
+				cin >> secondadj;
+			}
+
+			GraphList->InsertEdge(firstadj, secondadj);
+			cout << "插入成功" << endl;
 			cout << endl;
 			Menu();
 			break;
@@ -456,6 +475,93 @@ void Graph_List<T>::Insert(const int v1, const int v2)
 	}
 }
 
+template<typename T>//插入一条边  第一个顶点的序号 第二个顶点的序号
+void Graph_List<T>::InsertEdge(const int v1, const int v2)
+{
+	Edge<T>*Firstver;
+	Edge<T>*Secondver;
+	int Insertcost;
+	if (!vertices[v1].adjacent)//如果第一个顶点的邻接表头结点为空
+	{
+		vertices[v1].adjacent = new Edge<T>();
+		Firstver = vertices[v1].adjacent;
+		cout << "请输入插入边的权值" << endl;
+		cin >> Insertcost;
+		Firstver->cost = Insertcost;
+		Firstver->verAdj = v2;
+		Firstver->next = nullptr;
+
+		if (!vertices[v2].adjacent)//如果第二个顶点邻接表头结点为空
+		{
+			vertices[v2].adjacent = new Edge<T>();
+			Secondver = vertices[v2].adjacent;
+			Secondver->cost = Insertcost;
+			Secondver->verAdj = v1;
+			Secondver->next = nullptr;
+		}
+		else
+		{
+			Secondver = vertices[v2].adjacent;
+			while (Secondver)//找到第二个结点最后一个不为空的边结点
+			{
+				if (!Secondver->next)
+				{
+					Secondver->next = new Edge<T>();
+					Secondver->next->cost = Insertcost;
+					Secondver->next->verAdj = v1;
+					Secondver->next = nullptr;
+					break;
+				}
+				Secondver = Secondver->next;
+			}
+		}
+	}
+
+	else//如果第一个顶点的邻接表头结点不为空
+	{
+		Firstver = vertices[v1].adjacent;
+
+		while (Firstver)//找到第一个顶点最后一个不为空的边结点
+		{
+			if (!Firstver->next)
+			{
+				Firstver->next = new Edge<T>();
+				Firstver->cost = Insertcost;
+				Firstver->verAdj = v2;
+				Firstver->next = nullptr;
+				break;
+			}
+			Firstver = Firstver->next;
+		}
+
+		if (!vertices[v2].adjacent)//如果第二个顶点邻接表头结点为空
+		{
+			vertices[v2].adjacent = new Edge<T>();
+			Secondver = vertices[v2].adjacent;
+			Secondver->cost = Insertcost;
+			Secondver->verAdj = v1;
+			Secondver->next = nullptr;
+		}
+		else
+		{
+			Secondver = vertices[v2].adjacent;
+			while (Secondver)//找到第二个结点最后一个不为空的边结点
+			{
+				if (!Secondver->next)
+				{
+					Secondver->next = new Edge<T>();
+					Secondver->next->cost = Insertcost;
+					Secondver->next->verAdj = v1;
+					Secondver->next = nullptr;
+					break;
+				}
+				Secondver = Secondver->next;
+			}
+		}
+	}
+	
+}
+
 template<typename T>
 int Graph_List<T>::GetCost(const int v1, const int v2)
 {
@@ -469,6 +575,18 @@ int Graph_List<T>::GetCost(const int v1, const int v2)
 		TempEdge = TempEdge->next;
 	}
 	return 0;
+}
+
+template<typename T>//要删除结点的序号
+void Graph_List<T>::Delete(const int adj)
+{
+	
+}
+
+template<typename T>//删除一条边
+void Graph_List<T>::DeleteEdge(const int v1, const int v2)
+{
+
 }
 
 
