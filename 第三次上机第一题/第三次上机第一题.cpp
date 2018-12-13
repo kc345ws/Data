@@ -13,9 +13,6 @@ int main()
 void Menu()
 {
 	int select;
-	//int k;
-	//int item;
-	//int temp;
 	int firstadj;
 	int secondadj;
 	int FirstNeighbor;
@@ -29,7 +26,6 @@ void Menu()
 	cout << "8.查找顶点的第一个边结点" << endl;
 	cout << "9.查找顶点中指定边结点的下一个边结点" << endl;
 	cout << "10.删除顶点" << endl;
-	//求序号为v1的顶点的邻接表中序号为V2的下一个边结点的序号
 	while (1)
 	{
 

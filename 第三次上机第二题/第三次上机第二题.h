@@ -8,13 +8,13 @@ class SortingAlgorithm
 private:
 	int *Data;
 	int SortNumber;
+	int Times;//比较次数
 public:
 	SortingAlgorithm();
-
-	void InsertSort();//插入排序算法
-	void Bubble();//冒泡排序算法
-	void SelectSort();//选择排序算法
-	void HeapSort();//堆排序算法
-	void DCSort();//合并排序算法
+	void QSort(int *data,int m, int n);//快速排序算法
+	int Partition(int *Data, int m , int n);//分划算法
+	int ReturnSortNumber() { return SortNumber; }
+	int *ReturnData() { return Data; }
+	int ReturnTimes() { return Times; }
 };
 #endif
