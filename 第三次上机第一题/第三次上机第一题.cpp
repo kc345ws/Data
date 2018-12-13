@@ -28,6 +28,7 @@ void Menu()
 	cout << "7.删除一条边" << endl;
 	cout << "8.查找顶点的第一个边结点" << endl;
 	cout << "9.查找顶点中指定边结点的下一个边结点" << endl;
+	cout << "10.删除顶点" << endl;
 	//求序号为v1的顶点的邻接表中序号为V2的下一个边结点的序号
 	while (1)
 	{
@@ -89,8 +90,17 @@ void Menu()
 				cout << "你输入的数据超出范围请重新输入" << endl;
 				cin >> secondadj;
 			}
-			cout << "该边的权值" << endl;
-			cout << GraphList->GetCost(firstadj, secondadj);
+			
+			if (GraphList->GetCost(firstadj, secondadj) > 0)
+			{
+				cout << "该边的权值" << endl;
+				cout << GraphList->GetCost(firstadj, secondadj);
+			}
+			else
+			{
+				cout << "该两点不连通" << endl;
+			}
+			
 			cout << endl;
 			Menu();
 			break;
@@ -218,8 +228,15 @@ void Menu()
 			break;
 
 		case 10:
-			
-
+			cout << "请输入要删除顶点的序号" << endl;
+			cin >> firstadj;
+			while (firstadj < 0 || firstadj >= GraphList->ReturnGraphSize())
+			{
+				cout << "你输入的数据超出范围请重新输入" << endl;
+				cin >> firstadj;
+			}
+			GraphList->Delete(firstadj);
+			cout << "删除完毕" << endl;
 			cout << endl;
 			Menu();
 			break;
@@ -287,6 +304,11 @@ Graph_List<T>::Graph_List()
 			cout << "请输入第" << i << "个顶点" << "到第" << Adj << "个顶点边的权值" << endl;
 			int weight;
 			cin >> weight;
+			while (weight <= 0)
+			{
+				cout << "输入数据超出范围请重新输入" << endl;
+				cin >> weight;
+			}
 			if (!vertices[i].adjacent)//如果是第一个边结点则将它赋值给adjacent
 			{
 				vertices[i].adjacent = new Edge<T>();
@@ -383,6 +405,10 @@ inline int Graph_List<T>::GetFirstNeighbor(const int v)
 		if (Temp)
 		{
 			return Temp->verAdj;
+		}
+		else
+		{
+			return -1;
 		}
 	}
 	else
@@ -651,7 +677,57 @@ int Graph_List<T>::GetCost(const int v1, const int v2)
 template<typename T>//要删除结点的序号
 void Graph_List<T>::Delete(const int adj)
 {
-	
+	Edge<T> *TempEdge;
+	for (int i = 0; i < GraphSize; i++)//删除所有与该结点相连的边
+	{
+		TempEdge = vertices[i].adjacent;
+		while (TempEdge)
+		{
+			if (TempEdge->next)
+			{
+				if (TempEdge->next->verAdj == adj)
+				{
+					//Edge<T>*FrontEdge = TempEdge;
+					Edge<T>*BackEdge = TempEdge->next->next;
+					//FrontEdge->next = TempEdge->next->next;
+					delete TempEdge->next;
+					TempEdge->next = BackEdge;
+					//empEdge->next = nullptr;
+				}
+			}
+			else//TempEdge = vertices[i].adjacent;
+			{
+				if (TempEdge->verAdj == adj)
+				{
+					Edge<T>*FrontEdge = vertices[i].adjacent->next;
+					delete vertices[i].adjacent;
+					vertices[i].adjacent = FrontEdge;
+					TempEdge = vertices[i].adjacent;
+				}
+			}
+			if (TempEdge)
+			{
+				TempEdge = TempEdge->next;
+			}
+		}
+	}
+	for (int i = 0; i < GraphSize; i++)//把邻接表中序号大于要删除结点序号的序号-1
+	{
+		TempEdge = vertices[i].adjacent;
+		while (TempEdge)
+		{
+			if (TempEdge->verAdj > adj)
+			{
+				TempEdge->verAdj--;
+			}
+			TempEdge = TempEdge->next;
+		}
+	}
+	for (int i = adj; i < GraphSize - 1; i++)//把顶点表中删除结点后面的结点往前挪一位
+	{
+		vertices[i] = vertices[i + 1];
+	}
+	GraphSize--;
 }
 
 template<typename T>//删除一条边
