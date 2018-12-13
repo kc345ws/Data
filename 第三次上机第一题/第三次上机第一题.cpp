@@ -24,6 +24,7 @@ void Menu()
 	cout << "4.返回指定边的权值" << endl;
 	cout << "5.插入顶点" << endl;
 	cout << "6.插入一条边" << endl;
+	cout << "7.删除一条边" << endl;
 	while (1)
 	{
 
@@ -126,7 +127,30 @@ void Menu()
 			Menu();
 			break;
 		case 7:
-			
+			cout << "请输入第一个顶点的序号" << endl;
+			cin >> firstadj;
+			while (firstadj < 0 || firstadj >= GraphList->ReturnGraphSize())
+			{
+				cout << "你输入的数据超出范围请重新输入" << endl;
+				cin >> firstadj;
+			}
+
+			cout << "请输入第二个顶点的序号" << endl;
+			cin >> secondadj;
+			while (secondadj < 0 || secondadj >= GraphList->ReturnGraphSize())
+			{
+				cout << "你输入的数据超出范围请重新输入" << endl;
+				cin >> secondadj;
+			}
+
+			if (GraphList->DeleteEdge(firstadj, secondadj))
+			{
+				cout << "删除成功" << endl;
+			}
+			else
+			{
+				cout << "删除失败,这两个顶点间没有边相连" << endl;
+			}
 
 			cout << endl;
 			Menu();
@@ -584,9 +608,65 @@ void Graph_List<T>::Delete(const int adj)
 }
 
 template<typename T>//删除一条边
-void Graph_List<T>::DeleteEdge(const int v1, const int v2)
+bool Graph_List<T>::DeleteEdge(const int v1, const int v2)
 {
+	Edge<T>*Firstver;
+	Edge<T>*Secondver;
+	if (!vertices[v1].adjacent || !vertices[v2].adjacent)//如果第一或第二个顶点邻接表头结点为空
+	{
+		return false;
+	}
+	else
+	{
+		Firstver = vertices[v1].adjacent;
+		bool flag = false;
+		while (Firstver)//查找第一个顶点的邻接表中是否有第二个顶点
+		{
+			if (Firstver->verAdj == v2)
+			{
+				flag = !flag;
+				if (Firstver == vertices[v1].adjacent)
+				{
+					delete Firstver;
+					Firstver = nullptr;
+					vertices[v1].adjacent = nullptr;//将邻接表头结点赋值为空防止变成野指针
+				}
+				else
+				{
+					delete Firstver;
+					Firstver = nullptr;
+				}
+				break;
+			}
+			Firstver = Firstver->next;
+		}
+		if (!flag)//如果第一个顶点的邻接表中没有第二个顶点
+		{
+			return false;
+		}
 
+		Secondver = vertices[v2].adjacent;
+		while (Secondver)
+		{
+			if (Secondver->verAdj == v1)
+			{
+				if (Firstver == vertices[v1].adjacent)
+				{
+					delete Secondver;
+					Secondver = nullptr;
+					vertices[v2].adjacent = nullptr;
+				}
+				else
+				{
+					delete Secondver;
+					Secondver = nullptr;
+				}
+				break;
+			}
+			Secondver = Secondver->next;
+		}
+		return true;
+	}
 }
 
 
