@@ -27,6 +27,8 @@ void Menu()
 	cout << "6.插入一条边" << endl;
 	cout << "7.删除一条边" << endl;
 	cout << "8.查找顶点的第一个边结点" << endl;
+	cout << "9.查找顶点中指定边结点的下一个边结点" << endl;
+	//求序号为v1的顶点的邻接表中序号为V2的下一个边结点的序号
 	while (1)
 	{
 
@@ -184,7 +186,32 @@ void Menu()
 			break;
 
 		case 9:
-			
+			//求序号为v1的顶点的邻接表中序号为V2的下一个边结点的序号
+			cout << "请输入要查找顶点的序号" << endl;
+			cin >> firstadj;
+			while (firstadj < 0 || firstadj >= GraphList->ReturnGraphSize())
+			{
+				cout << "你输入的数据超出范围请重新输入" << endl;
+				cin >> firstadj;
+			}
+
+			cout << "请输入边结点的序号" << endl;
+			cin >> secondadj;
+			while (secondadj < 0 || secondadj >= GraphList->ReturnGraphSize())
+			{
+				cout << "你输入的数据超出范围请重新输入" << endl;
+				cin >> secondadj;
+			}
+			FirstNeighbor = GraphList->GetNextNeighbor(firstadj, secondadj);
+			if (FirstNeighbor == -1)
+			{
+				cout << "该边结点的下一个边结点为空" << endl;
+			}
+			else
+			{
+				cout << "该边结点的下一个边结点为" << endl;
+				cout << GraphList->ReturnVertex()[FirstNeighbor].verinfor << endl;
+			}
 
 			cout << endl;
 			Menu();
@@ -390,7 +417,7 @@ int Graph_List<T>::GetNextNeighbor(const int v1, const int v2)
 	}
 	else
 	{
-		return Temp->verAdj;
+		return Temp->next->verAdj;
 	}	
 }
 
