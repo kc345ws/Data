@@ -619,9 +619,11 @@ void Graph_List<T>::InsertEdge(const int v1, const int v2)
 			if (!Firstver->next)
 			{
 				Firstver->next = new Edge<T>();
-				Firstver->cost = Insertcost;
-				Firstver->verAdj = v2;
-				Firstver->next = nullptr;
+				cout << "请输入插入边的权值" << endl;
+				cin >> Insertcost;
+				Firstver->next->cost = Insertcost;
+				Firstver->next->verAdj = v2;
+				Firstver->next->next = nullptr;
 				break;
 			}
 			Firstver = Firstver->next;
